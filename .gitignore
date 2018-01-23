@@ -1,0 +1,6 @@
+config.sh
+.*.swp
+.swp
+*.qcow2
+*.img
+*.iso
