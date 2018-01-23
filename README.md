@@ -125,6 +125,61 @@ Supplied tools
 Cheat Sheet
 ===========
 
+Best practices for branching workflow
+-------------------------------------
+
+* The base image should only be the plain install of the used
+operating system, with a minimum set of additional tools.
+
+* (If the VM is in active use) Once a week or so create a
+branch in that you run updates, then commit the branch.
+
+* (If the VM is in active use and was updated regularly) Clean up
+the base image as described in the next section every few month or so.
+
+* For each new thing that you want to try, create a branch.
+Afterwards drop the branch unless you may need it again on.
+Never commit experimental stuff, tools, configs et al into the base image.
+
+* If you find a configuration that suits a specific task very well
+and will be used often, create a new copy of this repo and use the
+branch (merged with the current base image) as its new base image.
+
+Cleaning up images and image sizes
+----------------------------------
+
+The VirtIO disk allows the guest to discard areas (as usual with SSDs)
+and also recognizes areas that are all zero. Both such areas get
+removed from qcow2-type images and thus reduce the image size.
+Reduction may not show up in `ls -la` until an image is fully rewritten.
+
+It is a good idea to do this every few month.
+
+Workflow for getting a *minimal size* image is:
+
+* Get guest to a well-defined, good state that is a good new base for
+  future runs. E.g. current run all software updates.
+
+* In guest, clean up all files not required.
+
+* In guest, run defragmentation (if available)
+
+* In guest, overwrite all unused space with zeroes.
+  (e.g. for linux: `cat /dev/zero > /removeme; rm /removeme`,
+   or for windows: `sdelete64.exe -z C:` from the Sysinternal Suite)
+
+* Shutdown guest.
+
+* Create a recursive branch from this branch and boot it. Make sure the
+  branch is working properly. Drop recursive branch.
+
+* Commit original branch to master. (e.g. `qemu-img commit recuded.qcow2`
+
+* Fully convert the base image to a new base image of format qcow2. e.g.:
+  `qemu-img convert -O qcow2 base.img newbase.img`
+
+* Replace the old with the new base.
+
 Running Windows 10
 ------------------
 
