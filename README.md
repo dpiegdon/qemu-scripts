@@ -121,12 +121,8 @@ Supplied tools
 
 `watch.sh` - Show the VMs screen.
 
-
-Cheat Sheet
-===========
-
 Best practices for branching workflow
--------------------------------------
+=====================================
 
 * The base image should only be the plain install of the used
 operating system, with a minimum set of additional tools.
@@ -179,6 +175,24 @@ Workflow for getting a *minimal size* image is:
   `qemu-img convert -O qcow2 base.img newbase.img`
 
 * Replace the old with the new base.
+
+Handling secure images
+----------------------
+
+If data of a branch must not be leaked, it is best to run this branch
+detached (`detached` option to run.sh) and to have the branch-image in
+memory only. E.g. disable swap on the hypervisor, checkout this repo
+in `/dev/shm/`, setup the correct base image and create and run the
+branch. After shutting down the guest when you are done, also shutdown
+the hypervisor. That will take care of the remaining stuff in the
+hypervisor RAM.
+
+Obsiously this may require a lot of RAM... A not-so-secure method would
+be to have the branch image on a real disk, but to wipe it afterwards.
+SSDs are very nice for that as they are very fast.
+
+Cheat Sheet
+===========
 
 Running Windows 10
 ------------------
