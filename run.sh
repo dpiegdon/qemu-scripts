@@ -10,9 +10,12 @@ if [ "$1" == "detached" ]; then
 	NET_SSH_TO_VM_PORT=
 	NET_SMB_TO_VM_PORT=
 	NET_SERIAL_PORT=
-	NET_RESTRICT=1
-else
-	DETACHED_MODE="0"
+	NET1_NETDEV=""
+	NET1_DEVICE=""
+	NET2_NETDEV=""
+	NET2_DEVICE=""
+	NET3_NETDEV=""
+	NET3_DEVICE=""
 fi
 # }}}
 
@@ -60,37 +63,24 @@ if [[ "$SLOWDOWN" == "" ]]; then
 else
 	OPT_SLOWDOWN="-icount $SLOWDOWN"
 fi
-
-if [[ $NET_RESTRICT == "0" ]]; then
-	OPT_NET_RESTRICT=",restrict=off"
-else
-	OPT_NET_RESTRICT=",restrict=on"
-fi
-
-if [[ $NET_SSH_TO_VM_PORT != "" ]]; then
-	OPT_NET_FORWARD_SSH=",hostfwd=tcp:${NET_SSH_HOST}:${NET_SSH_TO_VM_PORT}-10.0.2.15:22"
-else
-	OPT_NET_FORWARD_SSH=""
-fi
-
-if [[ $NET_SMB_TO_VM_PORT != "" ]]; then
-	OPT_NET_FORWARD_SMB=",hostfwd=tcp:${NET_SMB_HOST}:${NET_SMB_TO_VM_PORT}-10.0.2.15:445"
-else
-	OPT_NET_FORWARD_SMB=""
-fi
-
-if [[ -z $NET_SERIAL_PORT ]]; then
-	OPT_NET_SERIAL_PORT=""
-else
-	OPT_NET_SERIAL_PORT="-serial tcp::$NET_SERIAL_PORT,server"
-fi
-
 if [[ -z $NET1_NETDEV ]]; then
 	OPT_NET1_NETDEV=""
 	OPT_NET1_DEVICE=""
 else
 	OPT_NET1_NETDEV="-netdev ${NET1_NETDEV}"
 	OPT_NET1_DEVICE="-device ${NET1_DEVICE}"
+fi
+
+if [[ $NET1_SSH_TO_VM_PORT != "" ]]; then
+	OPT_NET1_FORWARD_SSH=",hostfwd=tcp:${NET1_SSH_HOST}:${NET1_SSH_TO_VM_PORT}-10.0.2.15:22"
+else
+	OPT_NET1_FORWARD_SSH=""
+fi
+
+if [[ $NET1_SMB_TO_VM_PORT != "" ]]; then
+	OPT_NET1_FORWARD_SMB=",hostfwd=tcp:${NET1_SMB_HOST}:${NET1_SMB_TO_VM_PORT}-10.0.2.15:445"
+else
+	OPT_NET1_FORWARD_SMB=""
 fi
 
 if [[ -z $NET2_NETDEV ]]; then
@@ -108,6 +98,13 @@ else
 	OPT_NET3_NETDEV="-netdev ${NET3_NETDEV}"
 	OPT_NET3_DEVICE="-device ${NET3_DEVICE}"
 fi
+
+if [[ -z $NET_SERIAL_PORT ]]; then
+	OPT_NET_FORWARD_SERIAL_PORT=""
+else
+	OPT_NET_FORWARD_SERIAL_PORT="-serial tcp::$NET_SERIAL_PORT,server"
+fi
+
 # }}}
 
 set -x
@@ -138,9 +135,9 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	\
 	-soundhw hda \
 	\
-	$OPT_NET1_NETDEV $OPT_NET1_DEVICE \
-	$OPT_NET2_NETDEV $OPT_NET2_DEVICE \
-	$OPT_NET3_NETDEV $OPT_NET3_DEVICE \
+	${OPT_NET1_NETDEV}${OPT_NET1_FORWARD_SSH}${OPT_NET1_FORWARD_SMB} ${OPT_NET1_DEVICE} \
+	${OPT_NET2_NETDEV} ${OPT_NET2_DEVICE} \
+	${OPT_NET3_NETDEV} ${OPT_NET3_DEVICE} \
 	\
 	-usb \
 	-device usb-tablet \
@@ -155,7 +152,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-chardev spicevmc,name=usbredir,id=usbredirchardev3 \
 	-device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
 	\
-	$OPT_NET_SERIAL_PORT \
+	$OPT_NET_FORWARD_SERIAL_PORT \
 	\
 	-boot order=cdn \
 	\

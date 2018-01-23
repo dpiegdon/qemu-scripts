@@ -3,5 +3,5 @@
 
 . ./default_config.sh
 
-smbclient -p $NET_SMB_TO_VM_PORT $NET_SMB_OPTS //localhost/$NET_SMB_SHARE
+smbclient -p ${NET1_SMB_TO_VM_PORT} ${NET1_SMB_OPTS} //localhost/${NET1_SMB_SHARE}
 
