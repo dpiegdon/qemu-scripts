@@ -1,3 +1,3 @@
-#!/bin/sh -x
+#!/bin/bash -x
 IFACE="$1"
 

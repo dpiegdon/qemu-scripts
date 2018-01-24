@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/bash -x
 IFACE="$1"
 
 ip address add 192.168.21.254/24 dev "${IFACE}"

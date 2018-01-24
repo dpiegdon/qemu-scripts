@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # default configuration
 # override anything you like in ./config.sh

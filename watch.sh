@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # vim: fdm=marker
 
 . ./default_config.sh
