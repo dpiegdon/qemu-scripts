@@ -83,5 +83,5 @@ QEMU_EXTRA_OPTIONS=""
 # -------------------------------------------------
 # DO NOT COPY THIS to your configuration overrides.
 # this actually loads your overrides.
-[ -e config.sh ] && . ./config.sh
+[ -e `dirname $0`/config.sh ] && . `dirname $0`/config.sh
 

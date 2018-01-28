@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: fdm=marker
 
-. ./default_config.sh
+. `dirname $0`/default_config.sh
 
 remote-viewer -f spice://${SPICE_HOST}:${SPICE_PORT}/
 

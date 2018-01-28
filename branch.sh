@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: fdm=marker
 
-. ./default_config.sh
+. `dirname $0`/default_config.sh
 
 if [ $# -lt 1 ] || [ $# -gt 2 ]; then
 	echo "$0 <destination>.qcow2 [baseimage]"

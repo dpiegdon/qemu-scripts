@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: fdm=marker
 
-. ./default_config.sh
+. `dirname $0`/default_config.sh
 
 # {{{ reset options in case user wants to run detached
 if [ "$1" == "detached" ]; then
