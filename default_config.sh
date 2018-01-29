@@ -20,6 +20,7 @@ SPICE_EXTRA=",disable-ticketing"
 
 # default base image for branching
 DEFAULT_BASE_IMAGE="base.img"
+EXTRA_DRIVE_MODE=",discard=unmap,detect-zeroes=unmap"
 
 # slowdown virtual machine: run instruction every 2^N cycles.
 # if this is "" then KVM will be used.

@@ -123,7 +123,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-m ${MEM} \
 	-balloon virtio \
 	\
-	-drive if=virtio,media=disk,file="${IMAGE}",discard=unmap,detect-zeroes=unmap \
+	-drive if=virtio,media=disk,file="${IMAGE}"$EXTRA_DRIVE_MODE \
 	\
 	-vga qxl \
 	\

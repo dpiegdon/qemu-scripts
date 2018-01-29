@@ -144,6 +144,9 @@ branch (merged with the current base image) as its new base image.
 Cleaning up images and image sizes
 ----------------------------------
 
+NOTE: this only works if
+`EXTRA_DRIVE_MODE=",discard=unmap,detect-zeroes=unmap"`
+
 The VirtIO disk allows the guest to discard areas (as usual with SSDs)
 and also recognizes areas that are all zero. Both such areas get
 removed from qcow2-type images and thus reduce the image size.
