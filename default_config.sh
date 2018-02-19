@@ -20,6 +20,7 @@ SPICE_EXTRA=",disable-ticketing"
 
 # default base image for branching
 DEFAULT_BASE_IMAGE="base.img"
+DEFAULT_DRIVE_MODE=",if=virtio,media=disk"
 EXTRA_DRIVE_MODE=",discard=unmap,detect-zeroes=unmap"
 
 # slowdown virtual machine: run instruction every 2^N cycles.
@@ -44,8 +45,8 @@ NET1_DEVICE=""
 #NET1_NETDEV=user,restrict=on,id=unet0
 #NET1_DEVICE=virtio-net,netdev=unet0
 # or for a plain network between hypervisor and guest,
-# configured via two scripts net_if0_*.sh
-#NET1_NETDEV=tap,id=net0,script=net_if0_up.sh,downscript=net_if0_down.sh
+# configured via two scripts net_if1_*.sh
+#NET1_NETDEV=tap,id=net0,script=net_if1_up.sh,downscript=net_if1_down.sh
 #NET1_DEVICE=e1000,netdev=net0
 
 # optionally set a port for SSH forwarding to enable it

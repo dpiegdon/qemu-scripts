@@ -124,6 +124,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-balloon virtio \
 	\
 	-drive if=virtio,media=disk,file="${IMAGE}"$EXTRA_DRIVE_MODE \
+	-drive "file=${IMAGE}${DEFAULT_DRIVE_MODE}${EXTRA_DRIVE_MODE}" \
 	\
 	-vga qxl \
 	\
