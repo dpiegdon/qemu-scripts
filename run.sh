@@ -121,7 +121,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-cpu ${CPU_TYPE} -smp cores=${CPU_CORES} \
 	\
 	-m ${MEM} \
-	-balloon virtio \
+	-device virtio-balloon \
 	\
 	-drive "file=${IMAGE}${DEFAULT_DRIVE_MODE}${EXTRA_DRIVE_MODE}" \
 	\
