@@ -105,6 +105,23 @@ else
 	OPT_NET_FORWARD_SERIAL_PORT="-serial tcp::$NET_SERIAL_PORT,server"
 fi
 
+case $USB_VERSION in
+	2)
+		USB_DEVICES="	-device ich9-usb-ehci1,id=usb \
+				-device ich9-usb-uhci1,masterbus=usb.0,firstport=0,multifunction=on \
+				-device ich9-usb-uhci2,masterbus=usb.0,firstport=2 \
+				-device ich9-usb-uhci3,masterbus=usb.0,firstport=4 \
+				"
+		;;
+	3)
+		USB_DEVICES="-device nec-usb-xhci,id=usb"
+		;;
+	*)
+		echo "invalid USB version selected. pick one of '2' or '3'."
+		exit -1;
+		;;
+esac;
+
 # }}}
 
 set -x
@@ -141,10 +158,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	\
 	-usb \
 	-device usb-tablet \
-	-device ich9-usb-ehci1,id=usb \
-	-device ich9-usb-uhci1,masterbus=usb.0,firstport=0,multifunction=on \
-	-device ich9-usb-uhci2,masterbus=usb.0,firstport=2 \
-	-device ich9-usb-uhci3,masterbus=usb.0,firstport=4 \
+	${USB_DEVICES} \
 	-chardev spicevmc,name=usbredir,id=usbredirchardev1 \
 	-device usb-redir,chardev=usbredirchardev1,id=usbredirdev1 \
 	-chardev spicevmc,name=usbredir,id=usbredirchardev2 \

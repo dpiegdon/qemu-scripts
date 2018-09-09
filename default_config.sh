@@ -30,6 +30,9 @@ SLOWDOWN=""
 # amount of RAM for VM
 MEM="2G"
 
+# which USB version to use: 2 or 3?
+USB_VERSION="2"
+
 # CPU type
 CPU_TYPE="core2duo,nx,aes"
 
