@@ -4,3 +4,4 @@ config.sh
 *.qcow2
 *.img
 *.iso
+*.vmdk
