@@ -7,8 +7,8 @@
 if [ "$1" == "detached" ]; then
 	# run a fully detached VM
 	UUID=`uuidgen`
-	NET_SSH_TO_VM_PORT=
-	NET_SMB_TO_VM_PORT=
+	NET1_SSH_TO_VM_PORT=
+	NET1_SMB_TO_VM_PORT=
 	NET_SERIAL_PORT=
 	NET1_NETDEV=""
 	NET1_DEVICE=""
