@@ -3,6 +3,12 @@
 
 . `dirname $0`/default_config.sh
 
+COLOR_RED="\033[1;31m"
+COLOR_GREEN="\033[1;32m"
+COLOR_YELLOW="\033[1;33m"
+COLOR_BLUE="\033[1;34m"
+COLOR_RESET="\033[m"
+
 # {{{ reset options in case user wants to run detached
 if [ "$1" == "detached" ]; then
 	# run a fully detached VM
@@ -122,6 +128,39 @@ case $USB_VERSION in
 		;;
 esac;
 
+# }}}
+
+# {{{ make sure CPU is not vulnerable to anything that would the guest get priviliges or information
+if grep 'SMT vulnerable' /sys/devices/system/cpu/vulnerabilities/l1tf; then
+	if [ -z "$EXCLUSIVE_CPUSET" ]; then
+		echo -e "${COLOR_RED}L1TF CPU bug present and SMT on, data leak possible. See CVE-2018-3646 and https://www.kernel.org/doc/html/latest/admin-guide/l1tf.html for details.${COLOR_RESET}"
+	else
+		echo -e "${COLOR_YELLOW}L1TF CPU bug present and SMT on.${COLOR_RESET}"
+		echo -e "${COLOR_YELLOW}Using exclusive CPUSET ${EXCLUSIVE_CPUSET} as extra mitigation.${COLOR_RESET}"
+	fi
+fi
+# }}}
+
+# {{{ setup exclusive CPU set, if required
+if [ ! -z "$EXCLUSIVE_CPUSET" ]; then
+	if [ -z "$OPT_SUDO" ]; then
+		echo "Exclusive CPU sets only work if executed via sudo."
+		exit -1
+	fi
+	MY_CPUSET="/sys/fs/cgroup/cpuset/qemu.$$"
+	# FIXME https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt
+	set -e
+	${OPT_SUDO} mkdir "$MY_CPUSET"
+	echo "$(which ./cpuset_release_agent.sh)" \
+				| ${OPT_SUDO} tee "/sys/fs/cgroup/cpuset/release_agent"
+	echo "1"		| ${OPT_SUDO} tee "$MY_CPUSET/notify_on_release"
+	echo "1"		| ${OPT_SUDO} tee "$MY_CPUSET/cpuset.cpu_exclusive"
+	echo "$EXCLUSIVE_CPUSET"| ${OPT_SUDO} tee "$MY_CPUSET/cpuset.cpus"
+	cat /sys/fs/cgroup/cpuset/cpuset.mems \
+				| ${OPT_SUDO} tee "$MY_CPUSET/cpuset.mems"
+	echo "$$"		| ${OPT_SUDO} tee "$MY_CPUSET/tasks"
+	set +e
+fi
 # }}}
 
 set -x

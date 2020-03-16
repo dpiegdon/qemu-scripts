@@ -39,6 +39,11 @@ CPU_TYPE="core2duo,nx,aes"
 # CPU core count
 CPU_CORES="2"
 
+# cpuset definition that will exclusively be used for the VM.
+# leave empty if not needed, or define according to
+# https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt
+EXCLUSIVE_CPUSET=""
+
 # VGA device
 VGA="qxl"
 
