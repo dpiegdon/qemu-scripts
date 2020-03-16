@@ -151,7 +151,7 @@ if [ ! -z "$EXCLUSIVE_CPUSET" ]; then
 	# FIXME https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt
 	set -e
 	${OPT_SUDO} mkdir "$MY_CPUSET"
-	echo "$(which ./cpuset_release_agent.sh)" \
+	echo "$(which ./tools/cpuset_release_agent.sh)" \
 				| ${OPT_SUDO} tee "/sys/fs/cgroup/cpuset/release_agent"
 	echo "1"		| ${OPT_SUDO} tee "$MY_CPUSET/notify_on_release"
 	echo "1"		| ${OPT_SUDO} tee "$MY_CPUSET/cpuset.cpu_exclusive"

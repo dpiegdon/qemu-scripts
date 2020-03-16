@@ -56,8 +56,8 @@ NET1_DEVICE=""
 #NET1_NETDEV=user,restrict=on,id=unet0
 #NET1_DEVICE=virtio-net,netdev=unet0
 # or for a plain network between hypervisor and guest,
-# configured via two scripts net_if1_*.sh
-#NET1_NETDEV=tap,id=net0,script=net_if1_up.sh,downscript=net_if1_down.sh
+# configured via two scripts tools/net_if1_*.sh
+#NET1_NETDEV=tap,id=net0,script=tools/net_if1_up.sh,downscript=tools/net_if1_down.sh
 #NET1_DEVICE=e1000,netdev=net0
 
 # optionally set a port for SSH forwarding to enable it
