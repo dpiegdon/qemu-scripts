@@ -39,6 +39,9 @@ CPU_TYPE="core2duo,nx,aes"
 # CPU core count
 CPU_CORES="2"
 
+# VGA device
+VGA="qxl"
+
 NET1_NETDEV=""
 NET1_DEVICE=""
 # e.g. for user-mode network (NAT VM behind hypervisor)

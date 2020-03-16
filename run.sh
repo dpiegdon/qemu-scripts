@@ -142,7 +142,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	\
 	-drive "file=${IMAGE}${DEFAULT_DRIVE_MODE}${EXTRA_DRIVE_MODE}" \
 	\
-	-vga qxl \
+	-vga ${VGA} \
 	\
 	-object rng-random,filename=/dev/urandom,id=rng0 \
 	-device virtio-rng-pci,rng=rng0 \
