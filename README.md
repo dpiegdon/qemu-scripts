@@ -261,7 +261,7 @@ loopback: scan for partitions:
 Useful monitor command
 ----------------------
 
-Genera status
+Generic status
 
 * `info status`
 
