@@ -190,7 +190,7 @@ Workflow for getting a *minimal size* image is:
 * Create a new branch from this updated branch and boot it. Make sure new
   branch is working properly, then drop new branch again.
 
-* Commit original branch to master. (e.g. `qemu-img commit recuded.qcow2`
+* Commit original branch to master. (e.g. `qemu-img commit recuded.qcow2`)
 
 * Fully convert the base image to a new base image of format qcow2. e.g.:
   `qemu-img convert -O qcow2 base.img newbase.img`
