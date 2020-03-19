@@ -263,6 +263,33 @@ FIXME: provide more specific links and notes on what exactly to install. But to
 do so I'd have to reinstall windows 10... meh.
 
 
+Passing through PCI devices
+---------------------------
+
+If you want to pass a PCI device into the VM, you can do that if your computer
+and the given PCI card support that. There are detailed HowTos on that topic on
+the internet, e.g.:
+
+- `https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF`
+
+- `https://www.youtube.com/watch?v=3yhwJxWSqXI`
+
+- `https://www.youtube.com/watch?v=4cBINJKX274`
+
+So only a minimal description is provided here:
+
+First, make sure the setup is supported in principle. Keywords: IOMMU in both
+CPU and PCI card. Also see `tools/iommu-mapping.sh`.
+
+Second, make sure no driver on linux attached to the device. You can check that
+with `sudo lspci -nnk`.
+
+Last, tell qemu to pass the device into the VM. E.g. by setting additional
+config options to pass in devices `01:00.0` and `01:00.1`:
+
+`-vga none -device vfio-pci,host=01:00.0 -device vfio-pci,host=01:00.1`
+
+
 Attaching virtual USB sticks
 ----------------------------
 
