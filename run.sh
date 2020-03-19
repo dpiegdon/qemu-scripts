@@ -204,6 +204,10 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-device usb-redir,chardev=usbredirchardev2,id=usbredirdev2 \
 	-chardev spicevmc,name=usbredir,id=usbredirchardev3 \
 	-device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
+	-chardev spicevmc,name=usbredir,id=usbredirchardev4 \
+	-device usb-redir,chardev=usbredirchardev4,id=usbredirdev4 \
+	-chardev spicevmc,name=usbredir,id=usbredirchardev5 \
+	-device usb-redir,chardev=usbredirchardev5,id=usbredirdev5 \
 	\
 	$OPT_NET_FORWARD_SERIAL_PORT \
 	\
