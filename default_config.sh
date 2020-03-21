@@ -92,6 +92,15 @@ NET_SERIAL_PORT=""
 # any additional options that should always be passed to qemu
 QEMU_EXTRA_OPTIONS=""
 
+# anything to execute immediately before running qemu
+pre_exec_hook() {
+	:
+}
+
+# anything to execute immediately after qemu terminated
+post_exec_hook() {
+	:
+}
 
 # -------------------------------------------------
 # DO NOT COPY THIS to your configuration overrides.

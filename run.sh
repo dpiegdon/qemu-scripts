@@ -163,6 +163,8 @@ if [ ! -z "$EXCLUSIVE_CPUSET" ]; then
 fi
 # }}}
 
+pre_exec_hook
+
 set -x
 
 ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
@@ -216,4 +218,6 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	$QEMU_EXTRA_OPTIONS \
 	\
 	$@
+
+post_exec_hook
 
