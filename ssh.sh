@@ -3,5 +3,5 @@
 
 . `dirname $0`/default_config.sh
 
-ssh -p $NET_SSH_TO_VM_PORT localhost $@
+ssh -p $NET1_SSH_TO_VM_PORT localhost $@
 
