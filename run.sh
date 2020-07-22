@@ -69,6 +69,25 @@ if [[ "$SLOWDOWN" == "" ]]; then
 else
 	OPT_SLOWDOWN="-icount $SLOWDOWN"
 fi
+
+if [[ "$MONITOR_VIA" == "" ]]; then
+	OPT_MONITOR_VIA=""
+else
+	OPT_MONITOR_VIA="-monitor $MONITOR_VIA"
+fi
+
+if [[ "$QMP_VIA" == "" ]]; then
+	OPT_QMP_VIA=""
+else
+	OPT_QMP_VIA="-qmp $QMP_VIA"
+fi
+
+if [[ "$DISPLAY_VIA" == "" ]]; then
+	OPT_DISPLAY_VIA=""
+else
+	OPT_DISPLAY_VIA="-display $DISPLAY_VIA"
+fi
+
 if [[ -z $NET1_NETDEV ]]; then
 	OPT_NET1_NETDEV=""
 	OPT_NET1_DEVICE=""
@@ -171,8 +190,9 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	${OPT_SUDO_RUNAS} \
 	${OPT_SLOWDOWN} \
 	-spice ${OPT_SPICE} \
-	-display none \
-	-monitor stdio \
+	${OPT_MONITOR_VIA} \
+	${OPT_QMP_VIA} \
+	${OPT_DISPLAY_VIA} \
 	\
 	-uuid ${UUID} \
 	\

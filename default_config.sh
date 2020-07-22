@@ -47,6 +47,14 @@ EXCLUSIVE_CPUSET=""
 # VGA device
 VGA="qxl"
 
+# how to display the targets main (video) display
+# (set to 'none' to use qxl)
+DISPLAY_VIA="none"
+
+# where the QEMU monitoring shell and QMP should be accessible
+MONITOR_VIA="stdio"
+QMP_VIA=""
+
 NET1_NETDEV=""
 NET1_DEVICE=""
 # e.g. for user-mode network (NAT VM behind hypervisor)
