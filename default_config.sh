@@ -110,8 +110,11 @@ post_exec_hook() {
 	:
 }
 
+
 # -------------------------------------------------
 # DO NOT COPY THIS to your configuration overrides.
+# source additional helper functions
+. tools/vfio_helper.sh
 # this actually loads your overrides.
 [ -e `dirname $0`/config.sh ] && . `dirname $0`/config.sh
 
