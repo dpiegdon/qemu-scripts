@@ -37,3 +37,13 @@ pci_reset_and_rescan() {
 		echo "1" | sudo tee /sys/bus/pci/rescan
 	fi
 }
+
+# generate a list of QEMU parameters to use given pci devices
+pci_generate_qemu_parameters() {
+	DEVICES="$@"
+	PARAMS=""
+	for DEV in ${DEVICES}; do
+		PARAMS="${PARAMS} -device vfio-pci,host=${DEV}"
+	done;
+	echo $PARAMS
+}
