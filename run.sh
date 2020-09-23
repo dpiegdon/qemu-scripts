@@ -211,7 +211,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-watchdog i6300esb \
 	-watchdog-action reset \
 	\
-	-soundhw hda \
+	-device intel-hda -device hda-duplex \
 	\
 	${OPT_NET1_NETDEV}${OPT_NET1_FORWARD_SSH}${OPT_NET1_FORWARD_SMB} ${OPT_NET1_DEVICE} \
 	${OPT_NET2_NETDEV} ${OPT_NET2_DEVICE} \
