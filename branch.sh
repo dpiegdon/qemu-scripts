@@ -32,5 +32,5 @@ if [ -e "$DEST" ]; then
 	exit 1
 fi
 
-qemu-img create -f qcow2 -b $BASE $DEST
+qemu-img create -F qcow2 -f qcow2 -b $BASE $DEST
 
