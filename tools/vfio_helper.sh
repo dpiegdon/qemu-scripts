@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# to pull PCI device $PCIID into a VM:
+#  - extend QEMU_EXTRA_OPTIONS with:	$(pci_generate_qemu_parameters $PCIID)
+#  - extend pre_exec_hook with:		pci_rebind_vfio $PCIID
+#  - extend post_exec_hook with:	pci_reset_and_rescan $PCIID
+#
+# where $PCIID can e.g. be found with
+#   PCIID=$(lspci -Dnn | grep 'Cape Verde' | grep 'VGA compatible controller' | awk '{print $1}')
+# or
+#   PCIID=$(lspci -Dnn | grep '1106:3483' | awk '{print $1}')
+
 # internal helper: unbind a single device from its current driver
 pci_single_unbind() {
 	DEVICE="$1"

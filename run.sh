@@ -208,7 +208,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	-object rng-random,filename=/dev/urandom,id=rng0 \
 	-device virtio-rng-pci,rng=rng0 \
 	\
-	-watchdog i6300esb \
+	-device i6300esb \
 	-watchdog-action reset \
 	\
 	-device intel-hda -device hda-duplex \
