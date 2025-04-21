@@ -61,7 +61,7 @@ if [[ "$SUDO_USER" == "" ]]; then
 	OPT_SUDO_RUNAS=""
 else
 	OPT_SUDO="sudo"
-	OPT_SUDO_RUNAS="-runas $SUDO_USER"
+	OPT_SUDO_RUNAS="-run-with user=$SUDO_USER"
 fi
 
 if [[ "$SLOWDOWN" == "" ]]; then
