@@ -16,7 +16,7 @@ NICE="nice"
 # configuration of spice remote control
 SPICE_PORT="53504"
 SPICE_HOST="127.0.0.1"
-SPICE_EXTRA=",disable-ticketing"
+SPICE_EXTRA=",disable-ticketing=on"
 
 # default base image for branching
 DEFAULT_BASE_IMAGE="base.img"
