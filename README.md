@@ -295,6 +295,10 @@ Attaching virtual USB sticks
 
 Assuming `shared.img` is a qemu-compatible filesystem image:
 
+create a shared partition file:
+
+        dd if=/dev/zero bs=1024 of=shared.img count=$((1024*1024*2)) > shared.img
+
 Setup and insert stick: In the monitor, run:
 
 		drive_add 0 id=my_usb_disk,if=none,file=shared.img
