@@ -152,7 +152,7 @@ esac;
 # {{{ make sure CPU is not vulnerable to anything that would the guest get priviliges or information
 if grep 'SMT vulnerable' /sys/devices/system/cpu/vulnerabilities/l1tf; then
 	if [ -z "$EXCLUSIVE_CPUSET" ]; then
-		echo -e "${COLOR_RED}L1TF CPU bug present and SMT on, data leak possible. See CVE-2018-3646 and https://www.kernel.org/doc/html/latest/admin-guide/l1tf.html for details.${COLOR_RESET}"
+		echo -e "${COLOR_RED}L1TF CPU bug present and SMT on, data leak possible. See CVE-2018-3646 and https://www.kernel.org/doc/html/latest/admin-guide/hw-vuln/l1tf.html for details.${COLOR_RESET}"
 	else
 		echo -e "${COLOR_YELLOW}L1TF CPU bug present and SMT on.${COLOR_RESET}"
 		echo -e "${COLOR_YELLOW}Using exclusive CPUSET ${EXCLUSIVE_CPUSET} as extra mitigation.${COLOR_RESET}"
@@ -166,9 +166,13 @@ if [ ! -z "$EXCLUSIVE_CPUSET" ]; then
 		echo "Exclusive CPU sets only work if executed via sudo."
 		exit -1
 	fi
+
+	set -e
+	${OPT_SUDO} mkdir -p /sys/fs/cgroup/
+	mount | grep cpuset || ${OPT_SUDO} mount -t cgroup -ocpuset cpuset /sys/fs/cgroup/cpuset
+
 	MY_CPUSET="/sys/fs/cgroup/cpuset/qemu.$$"
 	# FIXME https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt
-	set -e
 	${OPT_SUDO} mkdir "$MY_CPUSET"
 	echo "$(readlink -f ./tools/cpuset_release_agent.sh)" \
 				| ${OPT_SUDO} tee "/sys/fs/cgroup/cpuset/release_agent"
