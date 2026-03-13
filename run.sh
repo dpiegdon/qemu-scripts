@@ -54,8 +54,6 @@ fi
 # }}}
 
 # {{{ evaluate config parameters
-OPT_SPICE="port=${SPICE_PORT},addr=${SPICE_HOST}${SPICE_EXTRA}"
-
 if [[ "$SUDO_USER" == "" ]]; then
 	OPT_SUDO=""
 	OPT_SUDO_RUNAS=""

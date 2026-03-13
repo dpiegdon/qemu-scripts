@@ -14,9 +14,33 @@ SUDO_USER=""
 NICE="nice"
 
 # configuration of spice remote control
-SPICE_PORT="53504"
-SPICE_HOST="127.0.0.1"
-SPICE_EXTRA=",disable-ticketing=on"
+# improved local-only connection
+SPICE_SOCKET="$(pwd)/.spice.socket"
+SPICE_EXTRA=",gl=on,streaming-video=filter,disable-ticketing=on"
+# network connection
+#SPICE_ADDR="127.0.0.1"
+#SPICE_PORT="53504"
+#SPICE_EXTRA=",disable-ticketing=on"  # disables authentication!
+
+generate_opt_spice() {
+	# lazy eval so config.sh can override params
+	if [ -n "$SPICE_SOCKET" ]; then
+		echo "SOCKET"
+		SPICE_URI="spice+unix://$SPICE_SOCKET"
+		SPICE_ADDR="$SPICE_SOCKET"
+		SPICE_EXTRA=",unix=on${SPICE_EXTRA}"
+	elif [ -n "$SPICE_ADDR" ] && [ -n "$SPICE_PORT" ]; then
+		echo "NETWORK"
+		SPICE_URI="spice://${SPICE_ADDR}:${SPICE_PORT}/"
+		SPICE_ADDR="$SPICE_ADDR"
+		SPICE_EXTRA=",port=${SPICE_PORT}${SPICE_EXTRA}"
+	else
+		echo "SPICE configuration?"
+		exit 1
+	fi
+	OPT_SPICE="addr=$SPICE_ADDR$SPICE_EXTRA"
+}
+
 
 # default base image for branching
 DEFAULT_BASE_IMAGE="base.img"
@@ -119,3 +143,4 @@ post_exec_hook() {
 # this actually loads your overrides.
 [ -e `dirname $0`/config.sh ] && . `dirname $0`/config.sh
 
+generate_opt_spice

@@ -6,3 +6,4 @@ config.sh
 *.img
 *.iso
 *.vmdk
+.spice.socket
