@@ -16,7 +16,7 @@ NICE="nice"
 # configuration of spice remote control
 # improved local-only connection
 SPICE_SOCKET="$(pwd)/.spice.socket"
-SPICE_EXTRA=",gl=on,streaming-video=filter,disable-ticketing=on"
+SPICE_EXTRA=",gl=on,disable-ticketing=on"
 # network connection
 #SPICE_ADDR="127.0.0.1"
 #SPICE_PORT="53504"
