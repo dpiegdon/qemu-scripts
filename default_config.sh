@@ -82,10 +82,10 @@ QMP_VIA=""
 # Empty to disable, or path to share.
 # Shares the given filesystem path with the guest via virtio-9p.
 # Works only for linux.
-# Mount in guest via:
-#	mount -t 9p -o trans=virtio,version=9p2000.L $SHARED_FILESYSTEM_ID /shared
+# Mount in guest via: (optionally add "-o trans=virtio,version=9p2000.L")
+#	mount -t 9p $SHARED_FILESYSTEM_ID /shared
 # or in fstab:
-#	$SHARED_FILESYSTEM_ID  /shared  9p  trans=virtio,version=9p2000.L,rw  0  0
+#	$SHARED_FILESYSTEM_ID  /shared  9p  rw  0  0
 #SHARED_FILESYSTEM_PATH="$(realpath $(dirname $0)/shared-directory)"
 SHARED_FILESYSTEM_PATH=""
 # The id used for this volume
