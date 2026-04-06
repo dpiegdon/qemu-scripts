@@ -15,7 +15,7 @@ NICE="nice"
 
 # configuration of spice remote control
 # improved local-only connection
-SPICE_SOCKET="$(pwd)/.spice.socket"
+SPICE_SOCKET="$(realpath $(dirname $0)/.spice.socket)"
 SPICE_EXTRA=",gl=on,disable-ticketing=on"
 # network connection
 #SPICE_ADDR="127.0.0.1"
@@ -78,6 +78,22 @@ DISPLAY_VIA="none"
 # where the QEMU monitoring shell and QMP should be accessible
 MONITOR_VIA="stdio"
 QMP_VIA=""
+
+# Empty to disable, or path to share.
+# Shares the given filesystem path with the guest via virtio-9p.
+# Works only for linux.
+# Mount in guest via:
+#	mount -t 9p -o trans=virtio,version=9p2000.L $SHARED_FILESYSTEM_ID /shared
+# or in fstab:
+#	$SHARED_FILESYSTEM_ID  /shared  9p  trans=virtio,version=9p2000.L,rw  0  0
+#SHARED_FILESYSTEM_PATH="$(realpath $(dirname $0)/shared-directory)"
+SHARED_FILESYSTEM_PATH=""
+# The id used for this volume
+SHARED_FILESYSTEM_ID="shared"
+# Readonly? "yes" or "no":
+SHARED_FILESYSTEM_READONLY="yes"
+# security_model of share, see https://wiki.qemu.org/Documentation/9psetup
+SHARED_FILESYSTEM_SECURITY_MODEL="mapped-xattr"
 
 NET1_NETDEV=""
 NET1_DEVICE=""
