@@ -1,10 +1,8 @@
+.*
 *.img
 *.iso
 *.qcow2
 *.vmdk
-.*.swp
-.spice.socket
-.swp
 config.sh
 emulated_tpm
 shared-directory
