@@ -128,21 +128,21 @@ else
 	OPT_NET_FORWARD_SERIAL_PORT="-serial tcp::$NET_SERIAL_PORT,server"
 fi
 
+OPT_9P_ARGS=()
 if [[ -z "$SHARED_FILESYSTEM_PATH" ]] || [[ -z "$SHARED_FILESYSTEM_ID" ]] || [[ -z "$SHARED_FILESYSTEM_SECURITY_MODEL" ]]; then
-	OPT_9P_ARG1=""
-	OPT_9P_ARG2=""
-	OPT_9P_ARG3=""
-	OPT_9P_ARG4=""
+	true
 else
 	if [ "$SHARED_FILESYSTEM_READONLY" == "no" ]; then
 		OPT_9P_READONLY=""
 	else
 		OPT_9P_READONLY=",readonly"
 	fi
-	OPT_9P_ARG1="-fsdev"
-	OPT_9P_ARG2="local$OPT_9P_READONLY,path=$SHARED_FILESYSTEM_PATH,id=$SHARED_FILESYSTEM_ID,security_model=$SHARED_FILESYSTEM_SECURITY_MODEL"
-	OPT_9P_ARG3="-device"
-	OPT_9P_ARG4="virtio-9p-pci,fsdev=$SHARED_FILESYSTEM_ID,mount_tag=$SHARED_FILESYSTEM_ID"
+	OPT_9P_ARGS+=(
+		"-fsdev"
+		"local$OPT_9P_READONLY,path=$SHARED_FILESYSTEM_PATH,id=$SHARED_FILESYSTEM_ID,security_model=$SHARED_FILESYSTEM_SECURITY_MODEL"
+		"-device"
+		"virtio-9p-pci,fsdev=$SHARED_FILESYSTEM_ID,mount_tag=$SHARED_FILESYSTEM_ID"
+		)
 fi
 
 case $USB_VERSION in
@@ -236,7 +236,7 @@ ${NICE} ${OPT_SUDO} qemu-system-x86_64 \
 	${OPT_NET2_NETDEV} ${OPT_NET2_DEVICE} \
 	${OPT_NET3_NETDEV} ${OPT_NET3_DEVICE} \
 	\
-	"${OPT_9P_ARG1}" "${OPT_9P_ARG2}" "${OPT_9P_ARG3}" "${OPT_9P_ARG4}" \
+	"${OPT_9P_ARGS[@]}" \
 	\
 	-usb \
 	-device usb-tablet \
