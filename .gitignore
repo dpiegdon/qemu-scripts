@@ -1,9 +1,10 @@
-emulated_tpm
-config.sh
-.*.swp
-.swp
-*.qcow2
 *.img
 *.iso
+*.qcow2
 *.vmdk
+.*.swp
 .spice.socket
+.swp
+config.sh
+emulated_tpm
+shared-directory

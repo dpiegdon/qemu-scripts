@@ -132,6 +132,7 @@ OPT_9P_ARGS=()
 if [[ -z "$SHARED_FILESYSTEM_PATH" ]] || [[ -z "$SHARED_FILESYSTEM_ID" ]] || [[ -z "$SHARED_FILESYSTEM_SECURITY_MODEL" ]]; then
 	true
 else
+	mkdir -p "$SHARED_FILESYSTEM_PATH"
 	if [ "$SHARED_FILESYSTEM_READONLY" == "no" ]; then
 		OPT_9P_READONLY=""
 	else
